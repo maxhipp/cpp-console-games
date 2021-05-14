@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 struct game{
-    int n = 0;
+    int n = 1;
     int gamemat[3][3];
     char cNameA[10];
     char cNameB[10];
@@ -31,36 +31,101 @@ void updateScreen(){
     printf("\n");
     for(int i = 0; i < 3; i++){
         for(int j = 0; j < 3; j++){
-            printf(" - ");
+            if(game.gamemat[i][j] == 1){
+                printf(" X ");
+            }else if(game.gamemat[i][j] == 4){
+                printf(" O ");
+            }else{
+                printf(" - ");
+            }
         }
         printf("\n");
     }
-    //return 1;
 }
 
-bool checkresults(){
-    if(game.num == 9){
-        printf("false");
-        game.running = false;
-    }else{
-        game.num = game.num++;
+void calcmat(int z){
+    int x = z/10;
+    int y = z%10;
+    printf("%i %i", x, y);
+    game.gamemat[x-1][y-1] = game.n;
+}
+
+void checkresults(){
+    int x;
+    for(int i = 0; i < 3; i++){
+        x = 0;
+        for(int j = 0; j < 3; j++){
+            x = x + game.gamemat[i][j];
+        }
+        if(x == 3){
+            printf("%s won!", game.cNameA);
+            game.running = false;
+            return;
+        }else if(x == 12){
+            printf("%s won!", game.cNameB);
+            game.running = false;
+            return;
+        }
     }
-    return true;
+    for(int i = 0; i < 3; i++){
+        x = 0;
+        for(int j = 0; j < 3; j++){
+            x = x + game.gamemat[j][i];
+        }
+        if(x == 3){
+            printf("%s won!", game.cNameA);
+            game.running = false;
+            return;
+        }else if(x == 12){
+            printf("%s won!", game.cNameB);
+            game.running = false;
+            return;
+        }
+    }
+    x = 0;
+    for(int i = 0; i < 3; i++){
+        x = x + game.gamemat[i][i];
+    }
+    if(x == 3){
+        printf("%s won!", game.cNameA);
+        game.running = false;
+        return;
+    }else if(x == 12){
+        printf("%s won!", game.cNameB);
+        game.running = false;
+        return;
+    }
+    x = 0;
+    for(int i = 0; i < 3; i++){
+        for(int j = 2; j >= 0; j--){
+            x = x + game.gamemat[i][j];
+        }
+    }
+    if(x == 3){
+        printf("%s won!", game.cNameA);
+        game.running = false;
+        return;
+    }else if(x == 12){
+        printf("%s won!", game.cNameB);
+        game.running = false;
+        return;
+    }
 }
 
 void rungame(){
-    if(game.n == 0){
+    if(game.n == 1){
         printf("%s ist an der Reihe: ",game.cNameA);
         scanf("%u",&game.iNum);
         printf("Es wurde %i eingegeben.\n",game.iNum);
-        game.n = 1;
+        calcmat(game.iNum);
+        game.n = 4;
     }else{
         printf("%s ist an der Reihe: ",game.cNameB);
         scanf("%u",&game.iNum);
         printf("Es wurde %i eingegeben.\n",game.iNum);
-        game.n = 0;
+        calcmat(game.iNum);
+        game.n = 1;
     }
-    printf("if finished");
     updateScreen();
     checkresults();
 }
@@ -70,7 +135,7 @@ int main(){
     if (initializeGame()){
         updateScreen();
         printf("Game initialized!\n");
-        while (game.running == true){
+        while (game.running){
             rungame();
         }
         printf("Stopped.");
