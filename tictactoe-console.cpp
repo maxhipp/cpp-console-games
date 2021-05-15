@@ -156,7 +156,7 @@ void checkresults()
         game.running = false;
         return;
     }else{
-        game.round = game.round++;
+        game.round = game.round + 1;
         return;
     }
 }
