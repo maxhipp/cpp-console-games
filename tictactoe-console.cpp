@@ -3,6 +3,8 @@
 */
 
 #include <stdio.h>
+//#include <iostream> //geht aus bisher unerfindlichen Gründen bei mir nicht
+//using namespace std;
 
 struct game
 {
@@ -13,6 +15,7 @@ struct game
     int iNum;
     bool running = false;
     int num = 0;
+    int round = 1;
 } game;
 
 bool initializeGame()
@@ -80,13 +83,13 @@ void checkresults()
         }
         if(x == 3)
         {
-            printf("%s won!", game.cNameA);
+            printf("%s won!\n", game.cNameA);
             game.running = false;
             return;
         }
         else if(x == 12)
         {
-            printf("%s won!", game.cNameB);
+            printf("%s won!\n", game.cNameB);
             game.running = false;
             return;
         }
@@ -100,13 +103,13 @@ void checkresults()
         }
         if(x == 3)
         {
-            printf("%s won!", game.cNameA);
+            printf("%s won!\n", game.cNameA);
             game.running = false;
             return;
         }
         else if(x == 12)
         {
-            printf("%s won!", game.cNameB);
+            printf("%s won!\n", game.cNameB);
             game.running = false;
             return;
         }
@@ -124,7 +127,7 @@ void checkresults()
     }
     else if(x == 12)
     {
-        printf("%s won!", game.cNameB);
+        printf("%s won!\n", game.cNameB);
         game.running = false;
         return;
     }
@@ -138,14 +141,22 @@ void checkresults()
     }
     if(x == 3)
     {
-        printf("%s won!", game.cNameA);
+        printf("%s won!\n", game.cNameA);
         game.running = false;
         return;
     }
     else if(x == 12)
     {
-        printf("%s won!", game.cNameB);
+        printf("%s won!\n", game.cNameB);
         game.running = false;
+        return;
+    }
+    if(game.round == 9){
+        printf("Tie! Nobody has won...\n");
+        game.running = false;
+        return;
+    }else{
+        game.round = game.round++;
         return;
     }
 }
@@ -189,5 +200,10 @@ int main()
     {
         printf("Error");
     }
+    while (true){
+
+    }
+    //cin.ignore();
+    //cin.get();
     return 0;
 }
