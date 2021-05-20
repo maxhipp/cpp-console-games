@@ -66,8 +66,15 @@ void calcmat(int z)
 {
     int x = z/10;
     int y = z%10;
-    printf("%i %i", x, y);
-    game.gamemat[x-1][y-1] = game.n;
+    //printf("%i %i", x, y);
+    if (game.gamemat[x-1][y-1] == 0){
+        game.gamemat[x-1][y-1] = game.n;
+    }
+    else{
+        printf("The chosen position is already occupied: ");
+        scanf("%i", &game.iNum);
+        calcmat(game.iNum);
+    }
 }
 
 //quick and dirty, maybe change to a better looking function...
@@ -132,12 +139,12 @@ void checkresults()
         return;
     }
     x = 0;
-    for(int i = 0; i < 3; i++)
+    int i = 0;
+    for(int j = 2; j >= 0; j--)
     {
-        for(int j = 2; j >= 0; j--)
-        {
-            x = x + game.gamemat[i][j];
-        }
+        //printf("%i %i ", i, j);
+        x = x + game.gamemat[i][j];
+        i++;
     }
     if(x == 3)
     {
@@ -157,6 +164,7 @@ void checkresults()
         return;
     }else{
         game.round = game.round + 1;
+        //printf("%i ", game.round);
         return;
     }
 }
@@ -167,7 +175,7 @@ void rungame()
     {
         printf("%s ist an der Reihe: ",game.cNameA);
         scanf("%u",&game.iNum);
-        printf("Es wurde %i eingegeben.\n",game.iNum);
+        //printf("Es wurde %i eingegeben.\n",game.iNum);
         calcmat(game.iNum);
         game.n = 4;
     }
@@ -175,7 +183,7 @@ void rungame()
     {
         printf("%s ist an der Reihe: ",game.cNameB);
         scanf("%u",&game.iNum);
-        printf("Es wurde %i eingegeben.\n",game.iNum);
+        //printf("Es wurde %i eingegeben.\n",game.iNum);
         calcmat(game.iNum);
         game.n = 1;
     }
