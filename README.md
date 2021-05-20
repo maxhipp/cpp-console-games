@@ -1,7 +1,7 @@
 # cpp-console-games
 by max hipp 2021 😇
 
-Collection of very simple C++ Console Games like TicTacToe...
+Collection of very simple one-file-C++-Console-Games like TicTacToe...
 
 
 ### TicTacToe:
