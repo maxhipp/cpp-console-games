@@ -7,8 +7,10 @@ struct game{
     int mode = 0;
     bool running = false;
     char word[20];
+    char wordtip[20];
     int wordsize = 0;
     char tips[26];
+    char tip;
     int round = 0;
     char pName[10];
 }game;
@@ -32,6 +34,32 @@ bool initializeGame(){
     }
     printf(" %i\n", game.wordsize);
     game.running = true;
+}
+
+void updateScreen(){
+    for(int i = 0; i < game.wordsize; i++){
+        printf(" _ ");
+    }
+}
+
+void testTip(){
+    for(int i = 0; i < game.wordsize; i++){
+        if(game.word[i] == game.tip){
+            game.wordtip[i] = game.tip;
+            break;
+        }
+        else if(i == game.wordsize - 1){
+            for(int j = 0; j < sizeof(game.tips); j++){
+                if(game.tips[j] == game.tip){
+                    printf("Buchstabe wurde bereits gespielt!\n");
+                    break;
+                }
+                else if(game.tips[j] == NULL){
+                    game.tips[j] = game.tip;
+                }
+            }
+        }
+    }
 }
 
 void rungame(){
